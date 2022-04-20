@@ -1,4 +1,5 @@
 import requests
+import pymysql
 #from pprint import pprint # 구조있는 데이터를 더 편하게 보여줌
 
 url_im = "http://apis.data.go.kr/1661000/EmergencyStatisticsService/getTrafficAccidentEmgActStats?serviceKey=tzNdpBB6EDyPn7B1MHodkDLXb5d7rQeJ1JFMfxvFMDxnyw9ii0Kei8Lvvi946HnnhuJNqb/JLfkGEUbSddqSMg==&numOfRows=10000&pageNo=1&resultType=json&sidoHqOgidNm="
@@ -24,5 +25,14 @@ for sido in s_station:
 
     url = url_im    
 
-for i in range(len(s_station)):
-    print(s_station[i] + ":" + str(p_count[i][0]))
+conn = pymysql.connect(host='34.122.99.10', port=3306, user='test', password='test', db='test_db', charset='utf8') 
+
+cursor = conn.cursor()
+
+sql = 'INSERT INTO seoul_info (automoblie, driver, etc, bybcle, pedestrian, passenger) VALUES (%s, %s, %s, %s, %s, %s)'
+
+cursor.execute(sql, tuple(p_count[0]))
+
+conn.commit()
+
+conn.close()
