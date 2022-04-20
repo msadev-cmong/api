@@ -1,0 +1,25 @@
+import pymysql
+import pandas as pd
+
+data = pd.read_csv('전국_이송환자수.csv')
+data = data.where((pd.notnull(data)), None)
+# 2. 데이터베이스 연결(사용자 권한 모두 주었음)
+db = pymysql.connect(host='35.88.24.201', port=3306, user='admin', password='admin', db='test', charset='utf8')   # charset: 인코딩 설정
+
+# 3. curosr 사용
+cursor = db.cursor() 
+
+# 4. 쿼리문 작성
+# 컬럼명: 테이블의 컬럼명과 동일하게 입력
+# %s 개수: 컬럼 개수만큼 입력
+sql = 'INSERT INTO main2(서울, 부산, 대구, 인천, 광주, 대전, 울산, 세종,경기,강원,충북,충남,전북,전남,경북,경남,창원,제주) VALUES(%s, %s, %s, %s, %s, %s,%s, %s,%s, %s,%s, %s,%s, %s,%s, %s,%s, %s)'
+
+# 5. 데이터 import
+for idx in range(len(data)):
+    cursor.execute(sql, tuple(data.values[idx]))
+
+# 6. 데이터베이스 업데이트 및 작업 종료
+db.commit() 
+
+# 7. 데이터베이스 닫기 
+db.close() 
