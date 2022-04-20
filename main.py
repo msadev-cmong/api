@@ -24,6 +24,5 @@ for sido in s_station:
 
     url = url_im    
 
-
 for i in range(len(s_station)):
-    print(s_station[i] + ":" + str(p_count[i]))
+    print(s_station[i] + ":" + str(p_count[i][0]))
