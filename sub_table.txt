@@ -1,0 +1,11 @@
+create table sub_table ( 
+	id int NOT NULL AUTO_INCREMENT, 
+	시도 varchar(10) NOT NULL, 
+	오토바이 int, 
+	운전자 int, 
+	기타탈것 int,
+	자전거 int,
+	보행자 int,
+	동승자 int,
+	PRIMARY KEY (id) 
+)default charset = 'utf8';
